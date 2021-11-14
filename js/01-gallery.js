@@ -3,6 +3,7 @@ import { galleryItems } from './gallery-items.js';
 
 const imgsContainer = document.querySelector('.gallery');
 const imgsMarkup = createImgGallary(galleryItems);
+let instance;
 
 imgsContainer.insertAdjacentHTML('beforeend', imgsMarkup);
 
@@ -34,8 +35,24 @@ function onGalleryImgClick(evt) {
     if (!isImgSwatchEl) {
         return;
     }
+    openModal(evt);
+};
 
-    basicLightbox.create(`
+function openModal(evt) {
+
+    instance = basicLightbox.create(`
 		<img width="1400" height="900" src="${evt.target.dataset.source}">
-	`).show()
+	`);
+    instance.show();
+
+    window.addEventListener('keydown', onEscKeyPressClose);    
+};
+
+function onEscKeyPressClose(evt) {
+    if (evt.code !== "Escape") {
+      return;
+    }
+    instance.close();
+    
+    window.removeEventListener('keydown', onEscKeyPressClose);
 };
