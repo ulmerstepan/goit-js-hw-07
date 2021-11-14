@@ -10,7 +10,7 @@ function createImgGallary(gallaryData) {
     return gallaryData.map(({ preview, original, description }) => {
         return `
             <a class="gallery__item" href="${original}">
-            <img class="gallery__image" src="${preview}" alt="${description}" />
+            <img class="gallery__image" src="${preview}" alt="${description}" title="${description}" />
             </a>
         `;
     })
@@ -20,12 +20,3 @@ function createImgGallary(gallaryData) {
     
 var lightbox = new SimpleLightbox('.gallery a');
 lightbox.options.captionDelay = 250;
-
-imgsContainer.addEventListener('click', onGalleryImgClick);
-
-function onGalleryImgClick(evt) {
-    const imgs = document.querySelectorAll(".gallery__image");
-        imgs.forEach((img) => {
-        img.setAttribute("title", `${evt.target.getAttribute("alt")}`);
-        })    
-};
